@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pengyi Liao</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent: #2563eb;
+      --accent-light: #eff6ff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #38bdf8 100%);
+      color: white;
+      padding: 80px 24px 60px;
+      text-align: center;
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 4px solid rgba(255,255,255,0.6);
+      margin: 0 auto 20px;
+      background: rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      overflow: hidden;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .hero .roles {
+      margin-top: 10px;
+      font-size: 15px;
+      opacity: 0.85;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .role-tag {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      padding: 3px 14px;
+      font-size: 13px;
+    }
+
+    .hero .tagline {
+      margin-top: 18px;
+      font-size: 17px;
+      opacity: 0.9;
+      max-width: 540px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-links {
+      margin-top: 28px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+
+    .btn:hover { opacity: 0.85; }
+
+    .btn-primary {
+      background: white;
+      color: var(--accent);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: white;
+      border: 2px solid rgba(255,255,255,0.6);
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      padding: 40px 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 640px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    .card-full {
+      grid-column: 1 / -1;
+    }
+
+    .card h2 {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    /* ── About ── */
+    .about-text {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    /* ── Timeline ── */
+    .timeline { list-style: none; }
+
+    .timeline li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 18px;
+    }
+
+    .timeline li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 7px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .timeline li::after {
+      content: "";
+      position: absolute;
+      left: 3.5px;
+      top: 15px;
+      width: 1px;
+      height: calc(100% + 2px);
+      background: var(--border);
+    }
+
+    .timeline li:last-child::after { display: none; }
+
+    .tl-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .tl-org {
+      font-size: 13px;
+      color: var(--accent);
+      margin-top: 1px;
+    }
+
+    .tl-date {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .tl-desc {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ── Skills ── */
+    .skill-group { margin-bottom: 16px; }
+
+    .skill-group:last-child { margin-bottom: 0; }
+
+    .skill-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      background: var(--accent-light);
+      color: var(--accent);
+      border-radius: 6px;
+      padding: 3px 10px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .tag-gray {
+      background: #f1f5f9;
+      color: var(--muted);
+    }
+
+    /* ── Interests ── */
+    .interest-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .interest-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+
+    .interest-item span:first-child { font-size: 16px; }
+
+    /* ── Contact ── */
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 14px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      transition: background 0.15s;
+    }
+
+    .contact-link:hover { background: var(--accent-light); color: var(--accent); }
+
+    .contact-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--accent-light);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      color: var(--muted);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="avatar">🧑‍💻</div>
+    <h1>Pengyi Liao</h1>
+    <div class="roles">
+      <span class="role-tag">Machine Learning Researcher</span>
+      <span class="role-tag">American Football Player</span>
+      <span class="role-tag">Photographer</span>
+    </div>
+    <p class="tagline">
+      Graduate researcher at Concordia University · Montreal, Canada.<br>
+      Passionate about ML, smart grid security, and transfer learning.
+    </p>
+    <div class="cta-links">
+      <a href="#contact" class="btn btn-primary">Get in Touch</a>
+      <a href="https://pengyiliao.com" class="btn btn-outline">Back to Site</a>
+    </div>
+  </section>
+
+  <!-- Main Grid -->
+  <div class="grid">
+
+    <!-- About -->
+    <div class="card card-full">
+      <h2>About Me</h2>
+      <p class="about-text">
+        I'm a thesis-based Master's student and Research Assistant in Electrical &amp; Computer Engineering at
+        <strong>Concordia University</strong>, working within Dr. Yan's research group.
+        My research sits at the intersection of <strong>machine learning, data mining, transfer learning</strong>,
+        and <strong>cyber-physical security</strong> for smart grid systems.
+        Previously, I completed my undergraduate degree at Huazhong University of Science and Technology.
+        Outside of research, I've played American football competitively for the Wuhan Griffins,
+        and I enjoy photography and life in Montreal with my dog George and cats Pangpang &amp; Gatito.
+      </p>
+    </div>
+
+    <!-- Experience -->
+    <div class="card">
+      <h2>Experience</h2>
+      <ul class="timeline">
+        <li>
+          <div class="tl-title">Research Assistant</div>
+          <div class="tl-org">Concordia University</div>
+          <div class="tl-date">2020 – Present · Montreal, Canada</div>
+          <div class="tl-desc">ML research in smart grid security under Dr. Yan's lab.</div>
+        </li>
+        <li>
+          <div class="tl-title">Intern (Mitacs Program)</div>
+          <div class="tl-org">Ericsson</div>
+          <div class="tl-date">2021 · Montreal, Canada</div>
+          <div class="tl-desc">Industry collaboration through the Mitacs Globalink program.</div>
+        </li>
+        <li>
+          <div class="tl-title">American Football Player</div>
+          <div class="tl-org">Wuhan Griffins</div>
+          <div class="tl-date">2016 – 2019 · Wuhan, China</div>
+          <div class="tl-desc">Central China Division Champion (2017), City Bowl runner-up (2018).</div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Education -->
+    <div class="card">
+      <h2>Education</h2>
+      <ul class="timeline">
+        <li>
+          <div class="tl-title">M.Eng. Electrical &amp; Computer Engineering</div>
+          <div class="tl-org">Concordia University</div>
+          <div class="tl-date">2020 – Present · Montreal, Canada</div>
+          <div class="tl-desc">Concordia Merit Scholarship (2020). Thesis-based program.</div>
+        </li>
+        <li>
+          <div class="tl-title">Graduate Studies (Electrical Automation)</div>
+          <div class="tl-org">Wuhan University</div>
+          <div class="tl-date">Expected June 2021 · Wuhan, China</div>
+        </li>
+        <li>
+          <div class="tl-title">B.Eng.</div>
+          <div class="tl-org">Huazhong University of Science &amp; Technology</div>
+          <div class="tl-date">Class of 2017 · Wuhan, China</div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Skills -->
+    <div class="card">
+      <h2>Skills</h2>
+      <div class="skill-group">
+        <div class="skill-label">Research</div>
+        <div class="tags">
+          <span class="tag">Machine Learning</span>
+          <span class="tag">Transfer Learning</span>
+          <span class="tag">Data Mining</span>
+          <span class="tag">Smart Grid Security</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Tools &amp; Languages</div>
+        <div class="tags">
+          <span class="tag tag-gray">Python</span>
+          <span class="tag tag-gray">MATLAB</span>
+          <span class="tag tag-gray">TensorFlow / PyTorch</span>
+          <span class="tag tag-gray">LaTeX</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Languages</div>
+        <div class="tags">
+          <span class="tag tag-gray">Chinese (Native)</span>
+          <span class="tag tag-gray">English (Fluent)</span>
+          <span class="tag tag-gray">French (Basic)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interests -->
+    <div class="card">
+      <h2>Interests</h2>
+      <div class="interest-list">
+        <div class="interest-item"><span>🏈</span><span>American Football</span></div>
+        <div class="interest-item"><span>📷</span><span>Photography</span></div>
+        <div class="interest-item"><span>🤖</span><span>AI Research</span></div>
+        <div class="interest-item"><span>⚡</span><span>Smart Grid Systems</span></div>
+        <div class="interest-item"><span>🐕</span><span>Pets (George, Pangpang, Gatito)</span></div>
+        <div class="interest-item"><span>🌆</span><span>Life in Montreal</span></div>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="card card-full" id="contact">
+      <h2>Contact</h2>
+      <div class="contact-links">
+        <a href="mailto:your@email.com" class="contact-link">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <div style="font-weight:600">Email</div>
+            <div style="font-size:12px;color:var(--muted)">your@email.com</div>
+          </div>
+        </a>
+        <a href="https://pengyiliao.com" class="contact-link">
+          <div class="contact-icon">🌐</div>
+          <div>
+            <div style="font-weight:600">Website</div>
+            <div style="font-size:12px;color:var(--muted)">pengyiliao.com</div>
+          </div>
+        </a>
+        <a href="#" class="contact-link">
+          <div class="contact-icon">💼</div>
+          <div>
+            <div style="font-weight:600">LinkedIn</div>
+            <div style="font-size:12px;color:var(--muted)">Add your LinkedIn URL</div>
+          </div>
+        </a>
+        <a href="#" class="contact-link">
+          <div class="contact-icon">🐙</div>
+          <div>
+            <div style="font-weight:600">GitHub</div>
+            <div style="font-size:12px;color:var(--muted)">Add your GitHub URL</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    © 2024 Pengyi Liao · Montreal, Canada
+  </footer>
+
+</body>
+</html>
